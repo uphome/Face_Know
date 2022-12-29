@@ -19,7 +19,7 @@ res = cv2.bitwise_and(img,img, mask= mask)
 
 
 
-
+cv2.imwrite('/home/hu/PycharmProjects/Face_know/hujiangtao.png',res)
 cv2.namedWindow('image_ray', cv2.WINDOW_NORMAL)
 cv2.imshow('image_ray', mask)
 cv2.waitKey(0)

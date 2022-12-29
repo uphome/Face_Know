@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Face_konw.iml" filepath="$PROJECT_DIR$/.idea/Face_konw.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Face_know/.idea/Face_konw.iml" filepath="$PROJECT_DIR$/../Face_know/.idea/Face_konw.iml" />
     </modules>
   </component>
 </project>
