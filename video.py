@@ -31,7 +31,7 @@ while cap.isOpened():
         number=1
         # 保存图片
     if ret:
-        #cv2.imwrite('/home/hu/PycharmProjects/pythonProject1/hujaingtao/%s.pgm' % count, frame)
+        #cv2.imwrite('/home/hu/PycharmProjects/Face_know/hujaingtao/%s.pgm' % count, frame)
         count += 1
     else:
         break
