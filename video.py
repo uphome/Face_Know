@@ -74,7 +74,8 @@ print("『INFO』选择器训练完成！")
 
 # ! 开始运行
 cap = cv2.VideoCapture(url)  # 读取视频流    1280*720
-time.sleep(1)  # 停止时间 看清楚相关设置
+# print("『ERRO』请检查是否打开摄像头 或 是否在同一局域网内")
+time.sleep(0.5)  # 停止时间 看清楚相关设置
 while cap.isOpened():
     number = 0
     ret, frame = cap.read()
@@ -92,8 +93,8 @@ while cap.isOpened():
         f = cv2.resize(image_gray[y:y + h, x:x + w], (200, 200))  # 脸部图片
         # cv2.imshow("f",f)
         if name_set == False:
-        print("\033[1;44m 『INFO』识别成功 \033[1;0m")
-        cv2.imshow("camera", img)
+            print("\033[1;44m 『INFO』识别成功 \033[1;0m")
+        # cv2.imshow("camera", img)
         number = 1
         # 保存脸部图片   可选是否保存脸部数据
         if name_set:
@@ -112,9 +113,13 @@ while cap.isOpened():
         correct_num_b = (correct_num_b - 50)
         correct_num_c = (correct_num_c - 5000)
         # print(correct_num_a,correct_num_b,correct_num_c)
-        print("\033[1;44m 『INFO』识别为 \033[1;0m" + "\033[1;42m%s\033[1;0m" % list(name_list.keys())[
-            list(name_list.values()).index(Labels)])
-        # TODO 向视频流中添加文字
+        text = list(name_list.keys())[
+            list(name_list.values()).index(Labels)]
+        # print(x,y)
+        cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_COMPLEX, 1.0, (0, 0, 255), 5)
+        print("\033[1;44m 『INFO』识别为 \033[1;0m" + "\033[1;42m%s\033[1;0m" % text)
+
+        cv2.imshow("camera", img)
 
         # 展示图片
     if number == 0:
