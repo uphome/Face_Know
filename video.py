@@ -37,7 +37,7 @@ url = "http://admin:123456@192.168.69.133:8081"
 face_cascade = cv2.CascadeClassifier('/home/hu/桌面/haarcascade_frontalface_alt.xml')
 face_cascade.load('/home/hu/桌面/haarcascade_frontalface_alt.xml')
 
-print('『INFO』start')
+print('『INFO』START')
 print("『INFO』是否保存人脸信息：" + str(name_set) + '\n')
 if name_set:
     print("姓名为" + Name)
@@ -47,7 +47,6 @@ else:  # 构造原始人脸数据库   以及人脸标签库
     # print(len(Name_arry))
     for i in range(len(Name_arry)):
         name_list[Name_arry[i]] = i + 1
-
     for i in Name_arry:
         for j in os.listdir(str(data_path + i)):
             # print(data_path+i+'/'+j)
@@ -56,21 +55,22 @@ else:  # 构造原始人脸数据库   以及人脸标签库
             labels.append(name_list[i])
 
 # ! 用现有的数据集训练识别器
-print("『INFO』开始训练选择器")
-time_kown(0)
-recognizer_a = cv2.face.EigenFaceRecognizer_create()  ## EigenFace(PCA，5000以下判断可靠）
-recognizer_a.train(image_dit, np.array(labels))  ##  这里只能是整数哟
-time_kown(33)
-print("  EigenFace 训练完成")
-recognizer_b = cv2.face.LBPHFaceRecognizer_create()  # LBPH（局部二值模式直方图，0完全匹配，50以下可接受，80不可靠
-recognizer_b.train(image_dit, np.array(labels))
-time_kown(66)
-print("  LBPH 训练完成")
-recognizer_c = cv2.face.FisherFaceRecognizer_create()  # Fisher(线判别分析 ， 5000以下判断为可靠）
-recognizer_c.train(image_dit, np.array(labels))
-time_kown(100)
-print("  Fisher 训练完成")
-print("『INFO』选择器训练完成！")
+    print("『INFO』开始训练选择器")
+    print("『INFO』录入的人脸过多可能等待时间过长")
+    time_kown(0)
+    recognizer_a = cv2.face.EigenFaceRecognizer_create()  ## EigenFace(PCA，5000以下判断可靠）
+    recognizer_a.train(image_dit, np.array(labels))  ##  这里只能是整数哟
+    time_kown(33)
+    print("  EigenFace 训练完成")
+    recognizer_b = cv2.face.LBPHFaceRecognizer_create()  # LBPH（局部二值模式直方图，0完全匹配，50以下可接受，80不可靠
+    recognizer_b.train(image_dit, np.array(labels))
+    time_kown(66)
+    print("  LBPH 训练完成")
+    recognizer_c = cv2.face.FisherFaceRecognizer_create()  # Fisher(线判别分析 ， 5000以下判断为可靠）
+    recognizer_c.train(image_dit, np.array(labels))
+    time_kown(100)
+    print("  Fisher 训练完成")
+    print("『INFO』选择器训练完成！")
 
 # ! 开始运行
 cap = cv2.VideoCapture(url)  # 读取视频流    1280*720
@@ -100,31 +100,33 @@ while cap.isOpened():
         if name_set:
             if ret:
                 cv2.imwrite("/home/hu/PycharmProjects/Face_know/Face_data/" + Name + '/%s.png' % str(count), f)
+                print("\033[1;42m 『INFO』人脸录入成功 姓名为%s \033[1;0m"%Name)
                 count = count + 1
         else:
             labels_a, correct_num_a = recognizer_a.predict(f)
-        labels_b, correct_num_b = recognizer_b.predict(f)
-        labels_c, correct_num_c = recognizer_c.predict(f)
-        # print(labels_a,labels_b,labels_c)
-        labels = [labels_a, labels_b, labels_c]
-        Labels = max(labels, key=labels.count)
-        # print(correct_num_a, correct_num_b, correct_num_c)
-        correct_num_a = (correct_num_a - 5000)
-        correct_num_b = (correct_num_b - 50)
-        correct_num_c = (correct_num_c - 5000)
-        # print(correct_num_a,correct_num_b,correct_num_c)
-        text = list(name_list.keys())[
-            list(name_list.values()).index(Labels)]
-        # print(x,y)
-        cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_COMPLEX, 1.0, (0, 0, 255), 5)
-        print("\033[1;44m 『INFO』识别为 \033[1;0m" + "\033[1;42m%s\033[1;0m" % text)
+            labels_b, correct_num_b = recognizer_b.predict(f)
+            labels_c, correct_num_c = recognizer_c.predict(f)
+            # print(labels_a,labels_b,labels_c)
+            labels = [labels_a, labels_b, labels_c]
+            Labels = max(labels, key=labels.count)
+            # print(correct_num_a, correct_num_b, correct_num_c)
+            correct_num_a = (correct_num_a - 5000)
+            correct_num_b = (correct_num_b - 50)
+            correct_num_c = (correct_num_c - 5000)
+            # print(correct_num_a,correct_num_b,correct_num_c)
+            text = list(name_list.keys())[
+               list(name_list.values()).index(Labels)]
+            # print(x,y)
+            cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_COMPLEX, 1.0, (0, 0, 255), 5)
+            print("\033[1;44m 『INFO』识别为 \033[1;0m" + "\033[1;42m%s\033[1;0m" % text)
 
         cv2.imshow("camera", img)
 
         # 展示图片
     if number == 0:
-        print("\033[1;41m 『INFO』无法识别 \033[1;0m")
-        cv2.imshow('camera', frame)
+        if not name_set:
+          print("\033[1;41m 『INFO』无法识别 \033[1;0m")
+          cv2.imshow('camera', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
