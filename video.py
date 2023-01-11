@@ -29,10 +29,10 @@ count = 0
 image_dit = []
 labels = []
 name_list = {}
-url = "http://admin:123456@192.168.69.133:8081"
+url = "http://admin:123456@192.168.1.3:8081"
 # video="/home/hu/桌面/home/hu/桌面/VID20221229180719.mp4"
 
-
+cap = cv2.VideoCapture(url)  # 读取视频流    1280*720
 # ！ 导入数据集矩阵
 face_cascade = cv2.CascadeClassifier('/home/hu/桌面/haarcascade_frontalface_alt.xml')
 face_cascade.load('/home/hu/桌面/haarcascade_frontalface_alt.xml')
@@ -73,7 +73,7 @@ else:  # 构造原始人脸数据库   以及人脸标签库
     print("『INFO』选择器训练完成！")
 
 # ! 开始运行
-cap = cv2.VideoCapture(url)  # 读取视频流    1280*720
+
 # print("『ERRO』请检查是否打开摄像头 或 是否在同一局域网内")
 time.sleep(0.5)  # 停止时间 看清楚相关设置
 while cap.isOpened():
@@ -133,3 +133,4 @@ while cap.isOpened():
 
 cap.release()
 cv2.destroyAllWindows()
+#TODO 添加运动检测识别，同时提高视频帧率。

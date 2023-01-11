@@ -14,13 +14,15 @@ low_b=np.array([255,0,0])
 high_b=np.array([245,255,245])
 mask=cv2.inRange(hsv,low_b,high_b)
 
-
+x=100
+y=100
+text="hu"
 res = cv2.bitwise_and(img,img, mask= mask)
-
+cv2.putText(res,text,(x,y),cv2.FONT_HERSHEY_COMPLEX,2.0,(100, 200, 200), 3)
 
 
 cv2.imwrite('/home/hu/PycharmProjects/Face_know/hujiangtao.png',res)
 cv2.namedWindow('image_ray', cv2.WINDOW_NORMAL)
-cv2.imshow('image_ray', mask)
+cv2.imshow('image_ray', res)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
