@@ -34,8 +34,8 @@ url = "http://admin:123456@192.168.1.3:8081"
 
 cap = cv2.VideoCapture(url)  # 读取视频流    1280*720
 # ！ 导入数据集矩阵
-face_cascade = cv2.CascadeClassifier('/home/hu/桌面/haarcascade_frontalface_alt.xml')
-face_cascade.load('/home/hu/桌面/haarcascade_frontalface_alt.xml')
+face_cascade = cv2.CascadeClassifier('/home/hu/PycharmProjects/Face_know/haarcascade_frontalface_alt.xml')
+face_cascade.load('/home/hu/PycharmProjects/Face_know/haarcascade_frontalface_alt.xml')
 
 print('『INFO』START')
 print("『INFO』是否保存人脸信息：" + str(name_set) + '\n')
