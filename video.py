@@ -9,7 +9,7 @@ import sys
 #
 #
 ####相关设置####
-Name = "XIAO REN"
+Name = "FENG"
 name_set = False  # Ture 为保存脸部信息 False 为不保存脸部信息
 data_path = '/home/hu/PycharmProjects/Face_know/Face_data/'  # 脸部数据存储位置
 
@@ -81,7 +81,7 @@ while cap.isOpened():
     ret, frame = cap.read()
     # print('读取正常\n 现在是第%d帧' % number_video)
     image_ray = cv2.bilateralFilter(frame, 4, 75, 75)
-    cv2.imshow("camera",frame)
+
     image_gray = cv2.cvtColor(image_ray, cv2.COLOR_BGR2GRAY)  # 灰度图
     faces = face_cascade.detectMultiScale(image_gray, 1.3, 5)  # 函数检测人脸
     for (x, y, w, h) in faces:
@@ -129,12 +129,7 @@ while cap.isOpened():
           cv2.imshow('camera', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
-        if name_set:
-            print("\033[1;41m 『INFO』人脸数据库保存成功 \033[1;0m")
-            break
-        else:
-            print("\033[1;41m 『INFO』程序结束！ \033[1;0m")
-            break
+        break
 
 cap.release()
 cv2.destroyAllWindows()
